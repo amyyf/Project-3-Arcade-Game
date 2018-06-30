@@ -10,7 +10,7 @@ var Enemy = function () {
     this.y = pickRow();
     this.speed = (Math.random() * 400) + 200;
 };
-
+// Randomize which row new enemies appear in
 function pickRow () {
   const rowOptions = [60, 140, 220];
   const el = Math.floor((Math.random() * rowOptions.length));
@@ -72,11 +72,17 @@ Player.prototype.render = function () {
 
 const allEnemies = new Set();
 
-setInterval(makeBugs, 1000);
-
+makeBugs();
 function makeBugs () {
   const bug = new Enemy();
   allEnemies.add(bug);
+  setTimeout(makeBugs, getIntervalTime());
+}
+
+function getIntervalTime () {
+  const int = (Math.random() * 1000) + 500;
+  console.log(int);
+  return int;
 }
 
 var player = new Player;
