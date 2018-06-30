@@ -4,7 +4,7 @@
  * a simple "caching" layer so it will reuse cached images if you attempt
  * to load the same image multiple times.
  */
-(function() {
+(function () {
     var resourceCache = {};
     var loading = [];
     var readyCallbacks = [];
@@ -13,13 +13,13 @@
      * an array of strings pointing to image files or a string for a single
      * image. It will then call our private image loading function accordingly.
      */
-    function load(urlOrArr) {
+    function load (urlOrArr) {
         if(urlOrArr instanceof Array) {
             /* If the developer passed in an array of images
              * loop through each value and call our image
              * loader on that image file
              */
-            urlOrArr.forEach(function(url) {
+            urlOrArr.forEach(function (url) {
                 _load(url);
             });
         } else {
@@ -34,7 +34,7 @@
     /* This is our private image loader function, it is
      * called by the public image loader function.
      */
-    function _load(url) {
+    function _load (url) {
         if(resourceCache[url]) {
             /* If this URL has been previously loaded it will exist within
              * our resourceCache array. Just return that image rather
@@ -46,7 +46,7 @@
              * within our cache; we'll need to load this image.
              */
             var img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 /* Once our image has properly loaded, add it to our cache
                  * so that we can simply return this image if the developer
                  * attempts to load this file in the future.
@@ -57,7 +57,7 @@
                  * call all of the onReady() callbacks we have defined.
                  */
                 if(isReady()) {
-                    readyCallbacks.forEach(function(func) { func(); });
+                    readyCallbacks.forEach(function (func) { func(); });
                 }
             };
 
@@ -74,14 +74,14 @@
      * have been previously loaded. If an image is cached, this functions
      * the same as calling load() on that URL.
      */
-    function get(url) {
+    function get (url) {
         return resourceCache[url];
     }
 
     /* This function determines if all of the images that have been requested
      * for loading have in fact been properly loaded.
      */
-    function isReady() {
+    function isReady () {
         var ready = true;
         for(var k in resourceCache) {
             if(resourceCache.hasOwnProperty(k) &&
@@ -95,7 +95,7 @@
     /* This function will add a function to the callback stack that is called
      * when all requested images are properly loaded.
      */
-    function onReady(func) {
+    function onReady (func) {
         readyCallbacks.push(func);
     }
 
