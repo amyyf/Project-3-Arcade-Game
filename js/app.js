@@ -70,14 +70,22 @@ Player.prototype.render = function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-const allEnemies = new Set();
+var Game = function () {
+  this.enemyRows = [60, 140, 220];
+  this.player = new Player();
+  this.enemies = new Set();
+};
 
-makeBugs();
-function makeBugs () {
+Game.prototype.makeBug = function () {
   const bug = new Enemy();
-  allEnemies.add(bug);
-  setTimeout(makeBugs, getIntervalTime());
-}
+  this.enemies.add(bug);
+  setTimeout(this.makeBug.bind(this), getIntervalTime());
+};
+
+const game = new Game();
+game.makeBug();
+
+const allEnemies = game.enemies;
 
 function getIntervalTime () {
   const int = (Math.random() * 1000) + 500;
@@ -85,7 +93,7 @@ function getIntervalTime () {
   return int;
 }
 
-var player = new Player;
+var player = game.player;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
