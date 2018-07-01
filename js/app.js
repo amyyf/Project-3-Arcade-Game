@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function () {
+var Enemy = function (game) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -7,12 +7,12 @@ var Enemy = function () {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
-    this.y = pickRow();
+    this.y = pickRow(game);
     this.speed = (Math.random() * 400) + 200;
 };
 // Randomize which row new enemies appear in
-function pickRow () {
-  const rowOptions = [60, 140, 220];
+function pickRow (game) {
+  const rowOptions = game.enemyRows;
   const el = Math.floor((Math.random() * rowOptions.length));
   return rowOptions[el];
 }
@@ -37,47 +37,68 @@ Enemy.prototype.render = function () {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-var Player = function () {
+var Player = function (game) {
+  this.game = game;
   this.sprite = 'images/char-boy.png';
+  this.positionX = 2;
+  this.positionY = 5;
+  this.x = game.columns[this.positionX];
+  this.y = game.rows[this.positionY];
 };
 
 Player.prototype.handleInput = function (direction) {
   switch (direction) {
     case 'left':
-      this.x -= 100;
+      if (this.positionX > 0) {
+        this.positionX--;
+      }
       break;
     case 'up':
-      this.y -= 100;
+      if (this.positionY > 0) {
+        this.positionY--;
+      }
       break;
     case 'right':
-      this.x += 100;
+      if (this.positionX < this.game.columns.length - 1) {
+        this.positionX++;
+      }
       break;
     case 'down':
-      this.y += 100;
+      if (this.positionY < this.game.rows.length - 1) {
+        this.positionY++;
+      }
       break;
   }
+  // return this.positionX || this.positionY;
 };
 
 Player.prototype.update = function () {
-
-}
+  this.x = this.game.columns[this.positionX];
+  this.y = this.game.rows[this.positionY];
+};
 
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+// Player.prototype.reset = function () {
+//   if
+// }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
 var Game = function () {
-  this.enemyRows = [60, 140, 220];
-  this.player = new Player();
+  this.columns = [0, 100, 200, 300, 400];
+  this.rows = [-20, 60, 140, 220, 300, 380];
+  this.enemyRows = this.rows.slice(1, 4);
+  this.player = new Player(this);
   this.enemies = new Set();
 };
 
 Game.prototype.makeBug = function () {
-  const bug = new Enemy();
+  const bug = new Enemy(this);
   this.enemies.add(bug);
   setTimeout(this.makeBug.bind(this), getIntervalTime());
 };
@@ -89,7 +110,6 @@ const allEnemies = game.enemies;
 
 function getIntervalTime () {
   const int = (Math.random() * 1000) + 500;
-  console.log(int);
   return int;
 }
 
