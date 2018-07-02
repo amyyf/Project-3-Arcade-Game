@@ -40,8 +40,8 @@ Enemy.prototype.render = function () {
 var Player = function (game) {
   this.game = game;
   this.sprite = 'images/char-boy.png';
-  this.positionX = 2;
-  this.positionY = 5;
+  this.positionX = game.playerStartX;
+  this.positionY = game.playerStartY;
   this.x = game.columns[this.positionX];
   this.y = game.rows[this.positionY];
 };
@@ -69,6 +69,7 @@ Player.prototype.handleInput = function (direction) {
       }
       break;
   }
+  player.win();
   // return this.positionX || this.positionY;
 };
 
@@ -79,6 +80,16 @@ Player.prototype.update = function () {
 
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.win = function () {
+  if (this.positionY === this.game.winningRow) {
+    this.positionX = this.game.playerStartX;
+    this.positionY = this.game.playerStartY;
+    console.log('One point for you!');
+  } else {
+    return;
+  }
 };
 
 // Player.prototype.reset = function () {
@@ -93,6 +104,9 @@ var Game = function () {
   this.columns = [0, 100, 200, 300, 400];
   this.rows = [-20, 60, 140, 220, 300, 380];
   this.enemyRows = this.rows.slice(1, 4);
+  this.playerStartX = 2;
+  this.playerStartY = 5;
+  this.winningRow = 0;
   this.player = new Player(this);
   this.enemies = new Set();
 };
