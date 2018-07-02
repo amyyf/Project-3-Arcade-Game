@@ -69,20 +69,28 @@ Player.prototype.handleInput = function (direction) {
       }
       break;
   }
-  player.win();
+  player.calculateScore();
   // return this.positionX || this.positionY;
 };
 
 Player.prototype.update = function () {
   this.x = this.game.columns[this.positionX];
   this.y = this.game.rows[this.positionY];
+  const bugs = game.enemies;
+  for (let bug of bugs) {
+    if (bug.y === this.y && ((bug.x + 40) > this.x && (bug.x - 40) < this.x)) {
+      console.log('collision');
+      this.positionX = this.game.playerStartX;
+      this.positionY = this.game.playerStartY;
+    }
+  }
 };
 
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.win = function () {
+Player.prototype.calculateScore = function () {
   if (this.positionY === this.game.winningRow) {
     this.positionX = this.game.playerStartX;
     this.positionY = this.game.playerStartY;
@@ -91,10 +99,6 @@ Player.prototype.win = function () {
     return;
   }
 };
-
-// Player.prototype.reset = function () {
-//   if
-// }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
