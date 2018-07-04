@@ -1,4 +1,5 @@
 /* globals ctx, Resources, Engine */
+
 const startButton = document.getElementById('start');
 startButton.addEventListener('click', startGame);
 
@@ -21,7 +22,6 @@ function startGame () {
       39: 'right',
       40: 'down'
     };
-
     game.player.handleInput(allowedKeys[e.keyCode]);
   });
 }
@@ -126,11 +126,13 @@ Player.prototype.render = function () {
 };
 
 Player.prototype.calculateScore = function () {
-  if (this.positionY === this.game.winningRow) {
-    this.positionX = this.game.playerStartX;
-    this.positionY = this.game.playerStartY;
-    this.game.scoreboard.increaseScore();
-  }
+  window.setTimeout(() => {
+    if (this.positionY === this.game.winningRow) {
+      this.positionX = this.game.playerStartX;
+      this.positionY = this.game.playerStartY;
+      this.game.scoreboard.increaseScore();
+    }
+  }, 250);
 };
 
 // Now instantiate your objects.
@@ -146,7 +148,7 @@ var Game = function () {
   this.winningRow = 0;
   this.player = new Player(this);
   this.enemies = new Set();
-  this.scoreboard = new Scoreboard();
+  this.scoreboard = new Scoreboard(this);
 };
 
 Game.prototype.makeBug = function () {
@@ -155,9 +157,22 @@ Game.prototype.makeBug = function () {
   setTimeout(this.makeBug.bind(this), getIntervalTime());
 };
 
-var Scoreboard = function () {
+Game.prototype.gameOver = function () {
+  const gameOver = document.createElement('div');
+  const gameOverText = `
+    <p class="game-over">Game over!</p>
+    <p class="game-over">Your score was ${this.scoreboard.score}</p>
+    <p class="game-over">Please refresh the page to play again!</p>
+  `;
+  gameOver.innerHTML = gameOverText;
+  document.body.append(gameOver);
+  document.getElementsByTagName('canvas')[0].remove();
+};
+
+var Scoreboard = function (game) {
+  this.game = game;
   this.score = 0;
-  this.timer = 5;
+  this.timer = 60;
   const doc = window.document;
   const scoreboard = doc.createDocumentFragment();
   const box = doc.createElement('div');
@@ -180,18 +195,15 @@ var Scoreboard = function () {
   document.body.appendChild(scoreboard);
   this.scoreDisplay = score;
   this.timerDisplay = timer;
-  this.countdown();
+  this.countdown(this.game);
 };
 
-Scoreboard.prototype.countdown = function () {
+Scoreboard.prototype.countdown = function (game) {
+  this.game = game;
   const interval = setInterval(() => {
     if (this.timer === 0) {
       clearInterval(interval);
-      window.alert(`
-        Game over!\n
-        Your score was ${this.score}\n
-        Please refresh the page to play again!
-        `);
+      this.game.gameOver();
     } else {
       this.timer--;
       this.timerDisplay.textContent = this.timer;

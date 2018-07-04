@@ -7,9 +7,10 @@ body {
   font-family: 'Wendy One', sans-serif;
 }
 
-.directions {
+.directions,
+.game-over {
   max-width: 32em;
-  margin: auto;
+  margin: 1em auto;
 }
 
 #box {
