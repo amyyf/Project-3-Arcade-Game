@@ -157,7 +157,7 @@ Game.prototype.makeBug = function () {
 
 var Scoreboard = function () {
   this.score = 0;
-  this.timer = 60;
+  this.timer = 5;
   const doc = window.document;
   const scoreboard = doc.createDocumentFragment();
   const box = doc.createElement('div');
@@ -187,7 +187,11 @@ Scoreboard.prototype.countdown = function () {
   const interval = setInterval(() => {
     if (this.timer === 0) {
       clearInterval(interval);
-      window.alert('You win!');
+      window.alert(`
+        Game over!\n
+        Your score was ${this.score}\n
+        Please refresh the page to play again!
+        `);
     } else {
       this.timer--;
       this.timerDisplay.textContent = this.timer;
