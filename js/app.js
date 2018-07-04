@@ -59,7 +59,7 @@ Enemy.prototype.update = function (dt) {
   // all computers.
   this.x = this.x + (this.speed * dt);
   if (this.x > (ctx.canvas.width)) {
-    allEnemies.delete(this);
+    window.allEnemies.delete(this);
   }
 };
 
@@ -104,14 +104,14 @@ Player.prototype.handleInput = function (direction) {
       }
       break;
   }
-  player.calculateScore();
+  this.calculateScore();
   // return this.positionX || this.positionY;
 };
 
 Player.prototype.update = function () {
   this.x = this.game.columns[this.positionX];
   this.y = this.game.rows[this.positionY];
-  const bugs = game.enemies;
+  const bugs = this.game.enemies;
   for (let bug of bugs) {
     if (bug.y === this.y && ((bug.x + 40) > this.x && (bug.x - 40) < this.x)) {
       this.game.scoreboard.decreaseScore();
@@ -167,6 +167,7 @@ Game.prototype.gameOver = function () {
   gameOver.innerHTML = gameOverText;
   document.body.append(gameOver);
   document.getElementsByTagName('canvas')[0].remove();
+  startButton.remove();
 };
 
 var Scoreboard = function (game) {
