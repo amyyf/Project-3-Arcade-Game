@@ -3,15 +3,18 @@ const startButton = document.getElementById('start');
 startButton.addEventListener('click', startGame);
 
 function startGame () {
+  removeParagraphs();
   const game = new Game();
   game.makeBug();
   window.game = game;
   window.allEnemies = game.enemies;
   window.player = game.player;
   Engine(window);
+
   // This listens for key presses and sends the keys to your
   // Player.handleInput() method. You don't need to modify this.
   document.addEventListener('keyup', function (e) {
+    e.preventDefault();
     var allowedKeys = {
       37: 'left',
       38: 'up',
@@ -21,6 +24,13 @@ function startGame () {
 
     game.player.handleInput(allowedKeys[e.keyCode]);
   });
+}
+
+// Delete direction paragraphs to prevent scrolling during gameplay
+function removeParagraphs () {
+  const header = document.getElementById('head');
+  header.nextElementSibling.remove();
+  header.nextElementSibling.remove();
 }
 
 // Enemies our player must avoid
@@ -150,17 +160,26 @@ var Scoreboard = function () {
   this.timer = 60;
   const doc = window.document;
   const scoreboard = doc.createDocumentFragment();
-  const timer = doc.createElement('div');
-  const score = doc.createElement('div');
+  const box = doc.createElement('div');
+  const timerBox = doc.createElement('div');
+  const scoreBox = doc.createElement('div');
+  const timer = doc.createElement('span');
+  const score = doc.createElement('span');
+  box.setAttribute('id', 'box');
   timer.setAttribute('id', 'timerDisplay');
   score.setAttribute('id', 'scoreDisplay');
+  timerBox.textContent = 'Seconds remaining: ';
+  scoreBox.textContent = 'Score: ';
   timer.textContent = this.timer;
   score.textContent = this.score;
-  scoreboard.appendChild(timer);
-  scoreboard.appendChild(score);
+  scoreBox.appendChild(score);
+  timerBox.appendChild(timer);
+  box.appendChild(timerBox);
+  box.appendChild(scoreBox);
+  scoreboard.appendChild(box);
   document.body.appendChild(scoreboard);
-  this.scoreDisplay = window.document.getElementById('scoreDisplay');
-  this.timerDisplay = window.document.getElementById('timerDisplay');
+  this.scoreDisplay = score;
+  this.timerDisplay = timer;
   this.countdown();
 };
 

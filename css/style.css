@@ -1,3 +1,19 @@
 body {
-    text-align: center;
+  text-align: center;
+  font-family: 'Roboto Mono', monospace;
+}
+
+#head {
+  font-family: 'Wendy One', sans-serif;
+}
+
+.directions {
+  max-width: 32em;
+  margin: auto;
+}
+
+#box {
+  max-width: 15em;
+  width: 100%;
+  margin: 1em auto 0 auto;
 }
