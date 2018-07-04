@@ -158,22 +158,44 @@ Game.prototype.makeBug = function () {
 };
 
 Game.prototype.gameOver = function () {
+  this.player = null;
+  this.enemies = null;
   const gameOver = document.createElement('div');
   const gameOverText = `
     <p class="game-over">Game over!</p>
     <p class="game-over">Your score was ${this.scoreboard.score}</p>
-    <p class="game-over">Please refresh the page to play again!</p>
+    <p class="game-over">Please refresh the page to play again</p>
   `;
   gameOver.innerHTML = gameOverText;
   document.body.append(gameOver);
   document.getElementsByTagName('canvas')[0].remove();
   startButton.remove();
+  this.checkHighScore();
+};
+
+Game.prototype.checkHighScore = function () {
+  const previousHighScore = localStorage.getItem('high score');
+  const currentScore = this.scoreboard.score;
+  const highScoreReport = document.createElement('div');
+  if (currentScore > previousHighScore) {
+    localStorage.setItem('high score', `${this.scoreboard.score}`);
+    const newHighScore = `
+      <p class="game-over">Congratulations! You have the new high score!</p>
+    `;
+    highScoreReport.innerHTML = newHighScore;
+  } else {
+    const tryAgain = `
+      <p class="game-over">The high score is ${previousHighScore} - try again!</p>
+    `;
+    highScoreReport.innerHTML = tryAgain;
+  }
+  document.body.append(highScoreReport);
 };
 
 var Scoreboard = function (game) {
   this.game = game;
   this.score = 0;
-  this.timer = 60;
+  this.timer = 5;
   const doc = window.document;
   const scoreboard = doc.createDocumentFragment();
   const box = doc.createElement('div');
