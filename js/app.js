@@ -81,7 +81,7 @@ Player.prototype.update = function () {
   const bugs = game.enemies;
   for (let bug of bugs) {
     if (bug.y === this.y && ((bug.x + 40) > this.x && (bug.x - 40) < this.x)) {
-      console.log('collision');
+      this.game.scoreboard.decreaseScore();
       this.positionX = this.game.playerStartX;
       this.positionY = this.game.playerStartY;
     }
@@ -96,7 +96,7 @@ Player.prototype.calculateScore = function () {
   if (this.positionY === this.game.winningRow) {
     this.positionX = this.game.playerStartX;
     this.positionY = this.game.playerStartY;
-    console.log('One point for you!');
+    this.game.scoreboard.increaseScore();
   }
 };
 
@@ -113,6 +113,7 @@ var Game = function () {
   this.winningRow = 0;
   this.player = new Player(this);
   this.enemies = new Set();
+  this.scoreboard = new Scoreboard();
 };
 
 Game.prototype.makeBug = function () {
@@ -121,17 +122,59 @@ Game.prototype.makeBug = function () {
   setTimeout(this.makeBug.bind(this), getIntervalTime());
 };
 
-const game = new Game();
-game.makeBug();
+var Scoreboard = function () {
+  this.score = 0;
+  this.timer = 60;
+  const doc = window.document;
+  const scoreboard = doc.createDocumentFragment();
+  const timer = doc.createElement('div');
+  const score = doc.createElement('div');
+  timer.setAttribute('id', 'timerDisplay');
+  score.setAttribute('id', 'scoreDisplay');
+  timer.textContent = this.timer;
+  score.textContent = this.score;
+  scoreboard.appendChild(timer);
+  scoreboard.appendChild(score);
+  document.body.appendChild(scoreboard);
+  this.scoreDisplay = window.document.getElementById('scoreDisplay');
+  this.timerDisplay = window.document.getElementById('timerDisplay');
+  this.countdown();
+};
 
-const allEnemies = game.enemies;
+Scoreboard.prototype.countdown = function () {
+  const interval = setInterval(() => {
+    if (this.timer === 0) {
+      clearInterval(interval);
+      window.alert('You win!');
+    } else {
+      this.timer--;
+      this.timerDisplay.textContent = this.timer;
+    }
+  }, 1000);
+};
+
+Scoreboard.prototype.increaseScore = function () {
+  this.score++;
+  this.scoreDisplay.textContent = this.score;
+};
+
+Scoreboard.prototype.decreaseScore = function () {
+  if (this.score > 0) {
+    this.score--;
+    this.scoreDisplay.textContent = this.score;
+  }
+};
 
 function getIntervalTime () {
   const int = (Math.random() * 1000) + 500;
   return int;
 }
 
-var player = game.player;
+const game = new Game();
+game.makeBug();
+
+const allEnemies = game.enemies;
+const player = game.player;
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
