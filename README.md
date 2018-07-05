@@ -3,7 +3,7 @@ Classic Arcade Game Clone
 
 This project employs Object-Oriented Programming principles to recreate a favorite game.
 
-This is the second project for my Front-End Nanodegree through [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001), for which I was awarded a merit scholarship by [Grow with Google](https://grow.google/).
+This is the third project for my Front-End Nanodegree through [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001), for which I was awarded a merit scholarship by [Grow with Google](https://grow.google/).
 
 There are [detailed instructions](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true), if you're interested, but my task was to implement the object classes to enable gameplay. The images, HTML Canvas code, and game engine were provided.
 
