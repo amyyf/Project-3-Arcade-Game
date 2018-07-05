@@ -21,10 +21,6 @@ There are [detailed instructions](https://docs.google.com/document/d/1v01aScPjSW
 3. Avoid the bugs
 4. Reach the water!
 
-### Dependencies
-
-I used [Babel](https://babeljs.io/) to transpile my `app.js` down to ES2015 for cross-browser compatibility - all browsers use the `app.min.js` file rather than my human-readable code.
-
 ### License
 
 Since this is a student project, feel free to use the code or methods in the `app.js` file with attribution. I did build off [Udacity's code](https://github.com/udacity/frontend-nanodegree-arcade-game), though, so if you're using anything from the `engine.js` or `resources.js` files, that's theirs.
