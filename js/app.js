@@ -53,7 +53,7 @@ var Game = function () {
 Game.prototype.makeBug = function () {
   const bug = new Enemy(this);
   this.enemies.add(bug);
-  setTimeout(this.makeBug.bind(this), getIntervalTime());
+  this.timeout = setTimeout(this.makeBug.bind(this), getIntervalTime());
 };
 
 function getIntervalTime () {
@@ -64,6 +64,7 @@ function getIntervalTime () {
 // Clears out the board to halt play once the timer has run out,
 // and checks the new score against previous high scores
 Game.prototype.gameOver = function () {
+  clearTimeout(this.timeout);
   this.player = null;
   this.enemies = null;
   const gameOver = document.createElement('div');
@@ -72,6 +73,8 @@ Game.prototype.gameOver = function () {
     <p class="game-over">Your score was ${this.scoreboard.score}</p>
     <p class="game-over">Please refresh the page to play again</p>
   `;
+  const box = document.getElementById('box');
+  box.remove();
   gameOver.innerHTML = gameOverText;
   document.body.append(gameOver);
   document.getElementsByTagName('canvas')[0].remove();
