@@ -1,6 +1,26 @@
-frontend-nanodegree-arcade-game
+Classic Arcade Game Clone
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+This project employs Object-Oriented Programming principles to recreate a favorite game.
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+This is the second project for my Front-End Nanodegree through [Udacity](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001), for which I was awarded a merit scholarship by [Grow with Google](https://grow.google/).
+
+There are [detailed instructions](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true), if you're interested, but my task was to implement the object classes to enable gameplay. The images, HTML Canvas code, and game engine were provided.
+
+## How to run the game
+
+- Clone this repo and either:
+  - Open the `index.html` file in your browser of choice
+  - Serve the files locally through the terminal or via a browser extension like [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en)
+- Go directly to its [page on my website](https://amyfrieson.com/Project-3-Arcade-Game/)!
+
+## How to play the game
+
+1. Click the `start` button
+2. Use the arrow keys to navigate your player around the board
+3. Avoid the bugs
+4. Reach the water!
+
+### License
+
+Since this is a student project, feel free to use the code or methods in the `app.js` file with attribution. I did build off [Udacity's code](https://github.com/udacity/frontend-nanodegree-arcade-game), though, so if you're using anything from the `engine.js` or `resources.js` files, that's theirs.
