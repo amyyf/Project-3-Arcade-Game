@@ -12,7 +12,7 @@ There are [detailed instructions](https://docs.google.com/document/d/1v01aScPjSW
 - Clone this repo and either:
   - Open the `index.html` file in your browser of choice
   - Serve the files locally through the terminal or via a browser extension like [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb?hl=en)
-- Go directly to its [page on my website](https://amyfrieson.com/Project-3-Arcade-Game/)!
+- Go directly to its [page on my website](https://amyfrieson.com/arcade-game/)!
 
 ## How to play the game
 
